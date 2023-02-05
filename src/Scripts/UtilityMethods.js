@@ -33,8 +33,10 @@ export async function SignIn(email, password, flag) {
       ? setPersistence(auth, browserLocalPersistence)
       : setPersistence(auth, browserSessionPersistence);
     const user = await signInWithEmailAndPassword(auth, email, password);
+    return true;
   } catch (e) {
     console.log(e.code);
+    return e.code;
   }
 }
 
@@ -42,10 +44,11 @@ export async function SignUp(userName, email, password, flag) {
   try {
     setPersistence(auth, browserSessionPersistence);
     const user = await createUserWithEmailAndPassword(auth, email, password);
-    updateProfile(auth.currentUser, { displayName: userName, email });
-    console.log(user);
+    await updateProfile(auth.currentUser, { displayName: userName, email });
+    return true;
   } catch (e) {
-    console.log(e.message);
+    console.log(e.code);
+    return e.code;
   }
 }
 
@@ -99,6 +102,7 @@ export async function findPaste(code) {
     return data;
   } catch (e) {
     console.log(e);
+    return false;
   }
 }
 
@@ -117,5 +121,20 @@ export async function updatePaste(code, newPaste) {
     await updateDoc(doc(db, "UserPastes", code), { paste: newPaste });
   } catch (e) {
     console.log(e.message);
+  }
+}
+
+export function getError(errorCode) {
+  switch (errorCode) {
+    case "auth/email-already-in-use":
+      return "Email is already in use !";
+    case "auth/weak-password":
+      return "Weak password !";
+    case "auth/wrong-password":
+      return "Incorrect password !";
+    case "auth/user-not-found":
+      return "User not found !";
+    default:
+      return "Something went wrong,try again !";
   }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./Components/Navbar";
+
 import AuthContextProvider from "./Context/AuthContextProvider";
 import DisplayPaste from "./Pages/DisplayPaste";
 
@@ -14,7 +14,6 @@ function App() {
     <>
       <AuthContextProvider>
         <BrowserRouter>
-          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/find" element={<Find />} />

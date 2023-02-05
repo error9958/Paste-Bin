@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Message from "../Components/Message";
+import Navbar from "../Components/Navbar";
 import PasteList from "../Components/PasteList";
-import Popup from "../Components/Popup";
 import { auth } from "../Scripts/firebase";
 import { createPaste } from "../Scripts/UtilityMethods";
 
@@ -11,6 +11,8 @@ function Home() {
   const [flag, setFlag] = useState("public");
   const [title, setTitle] = useState("");
   const [password, setPassword] = useState("");
+  const [menu, setMenu] = useState(true);
+
   const submitHandler = (e) => {
     e.preventDefault();
     createPaste(
@@ -28,7 +30,13 @@ function Home() {
   };
   return (
     <>
-      <div className="xl:mx-72 md:flex items-start gap-4  mb-4 xl:px-12 px-4  py-8  bg-blk">
+      <Navbar menu={menu} setMenu={setMenu} />
+      <div
+        onClick={() => {
+          setMenu(true);
+        }}
+        className="xl:mx-72  md:flex items-start gap-4  mt-6  xl:px-12 px-4  py-4  bg-blk"
+      >
         {password ? (
           <Message password={password} setPassword={setPassword} />
         ) : (
@@ -36,11 +44,13 @@ function Home() {
             onSubmit={(e) => {
               submitHandler(e);
             }}
-            className=" items-center relative md:w-2/3 flex flex-col gap-6"
+            className=" items-center relative md:w-2/3 flex flex-col my-4 gap-6"
           >
             <div className="text-lg  w-full">Paste Name / Title</div>
 
             <input
+              required
+              spellCheck={false}
               className="w-full outline-none px-6 py-3 text-blk"
               type="text"
               value={title}
@@ -75,6 +85,7 @@ function Home() {
               </div>
             </div>
             <textarea
+              required
               ref={ref}
               className="font-mono text-blk resize-none   shadow-black w-full px-8 py-6 h-60 outline-none rounded-lg  "
               value={value}

@@ -14,6 +14,8 @@ module.exports = {
         blkv: "#333333",
         whitesmoke: "#ebebeb",
         grybor: "#e6e6e6",
+        newWhite:"#eaebef",
+        gry2:"#3B3B3B"
       },
     },
   },
