@@ -42,7 +42,9 @@ export async function SignIn(email, password, flag) {
 
 export async function SignUp(userName, email, password, flag) {
   try {
-    setPersistence(auth, browserSessionPersistence);
+    flag
+      ? setPersistence(auth, browserLocalPersistence)
+      : setPersistence(auth, browserSessionPersistence);
     const user = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(auth.currentUser, { displayName: userName, email });
     return true;
