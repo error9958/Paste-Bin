@@ -1,3 +1,3 @@
 # Paste-Bin
 
-url : https://chatapp-61d74.web.app
+url : https://paste-bin-site.web.app
